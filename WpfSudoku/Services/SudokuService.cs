@@ -1,102 +1,42 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------------
+// <copyright file="SudokuService.cs">
+//     Copyright (c) 2021 by Bryan Bush. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using WpfSudoku.Models;
+using WpfSudoku.Services.Interfaces;
+
 namespace WpfSudoku.Services;
 
-internal static class SudokuService
+internal sealed class SudokuService : ISudokuService
 {
-    public static (List<int> clues, List<int> solution) Generate(int? seed = null)
+    public Puzzle GeneratePuzzle(int? seed = null)
     {
-        var rng = (seed == null) ? new Random() : new Random((int)seed);
+        var rng = (seed == null)
+            ? new Random()
+            : new Random((int)seed);
 
         var solution = GenerateValidGrid(rng);
 
-        var clues = solution.ToList();
-        RemoveCells(clues, rng, backtrackThreshold: 100, clueThreshold: 35);
+        var grid = solution.ToList();
+        RemoveCells(grid, rng);
 
-        return (clues, solution);
-    }
-
-    public static (List<int[]> solutions, bool isComplete) Solve(List<int> cells, SolveGoal? goal = SolveGoal.AllSolutions, int? backtrackThreshold = null)
-    {
-        var solutions = new List<int[]>();
-
-        var steps = new Stack<Step>();
-        var backtrackCount = 0;
-
-        while (true)
+        var puzzle = new Puzzle()
         {
-            if (backtrackThreshold.HasValue && (backtrackCount >= backtrackThreshold.Value))
+            Grid = new Grid()
             {
-                // NOTE - Hit backtrack threshold, so return our solutions thus
-                // far and a valud indicating we did not finish.
+                Cells = grid.Select(value => new Cell() { Value = value, IsGiven = value > 0 }).ToArray()
+            },
 
-                return (solutions, isComplete: false);
-            }
+            Solution = solution.ToArray()
+        };
 
-            var step = GetStep(cells);
-
-            if (step == null)
-            {
-                // NOTE - Failed to generate a new step, which means we found a
-                // solution.
-
-                var solution = cells.ToArray();
-                solutions.Add(solution);
-
-                // NOTE - If we found a solution, then we have proved
-                // solvability and can stop.
-
-                if (goal == SolveGoal.ProveSolvable)
-                {
-                    break;
-                }
-
-                // NOTE - If we found multiple solutions, then we have
-                // disproved uniqueness and can stop.
-
-                if ((solutions.Count > 1) && (goal == SolveGoal.DisproveUniqueness))
-                {
-                    break;
-                }
-
-                // NOTE - Continue on.
-
-                backtrackCount += 1;
-
-                if (!TryBacktrack(cells, steps))
-                {
-                    break;
-                }
-            }
-            else
-            {
-                if (step.Candidates.Count == 0)
-                {
-                    // NOTE - No candidates left to try for this step, so we 
-                    // need to backtrack.
-
-                    backtrackCount += 1;
-
-                    if (!TryBacktrack(cells, steps))
-                    {
-                        break;
-                    }
-                }
-                else
-                {
-                    // NOTE - Try next candidate for this step.
-
-                    var candidate = step.Candidates.Pop();
-                    cells[step.CellIndex] = candidate;
-
-                    steps.Push(step);
-                }
-            }
-        }
-
-        return (solutions, isComplete: true);
+        return puzzle;
     }
 
     private static List<int> GenerateValidGrid(Random rng)
@@ -138,7 +78,7 @@ internal static class SudokuService
         return cells;
     }
 
-    private static void RemoveCells(List<int> cells, Random rng, int? backtrackThreshold, int? clueThreshold)
+    private static void RemoveCells(List<int> cells, Random rng, int? backtrackThreshold = null, int? clueThreshold = null)
     {
         var cellIndices = Enumerable.Range(0, 81).ToList();
         Shuffle(cellIndices, rng);
@@ -171,6 +111,94 @@ internal static class SudokuService
                 }
             }
         }
+    }
+
+    private enum SolveGoal
+    {
+        ProveSolvable,
+        DisproveUniqueness,
+        AllSolutions
+    }
+
+    private static (List<List<int>> solutions, bool isComplete) Solve(List<int> cells, SolveGoal? goal = SolveGoal.AllSolutions, int? backtrackThreshold = null)
+    {
+        var solutions = new List<List<int>>();
+
+        var steps = new Stack<Step>();
+        var backtrackCount = 0;
+
+        while (true)
+        {
+            if (backtrackThreshold.HasValue && (backtrackCount >= backtrackThreshold.Value))
+            {
+                // NOTE - Hit backtrack threshold, so return our solutions thus
+                // far and a value indicating that we did not finish.
+
+                return (solutions, isComplete: false);
+            }
+
+            var step = GetStep(cells);
+
+            if (step.HasValue)
+            {
+                if (step.Value.Candidates.Count == 0)
+                {
+                    // NOTE - No candidates left to try for this step, so we 
+                    // need to backtrack.
+
+                    backtrackCount += 1;
+
+                    if (!TryBacktrack(cells, steps))
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    // NOTE - Try next candidate for this step.
+
+                    var candidate = step.Value.Candidates.Pop();
+                    cells[step.Value.CellIndex] = candidate;
+
+                    steps.Push(step.Value);
+                }
+            }
+            else
+            {
+                // NOTE - Failed to generate a new step, which means we found a
+                // solution.
+
+                var solution = cells.ToList();
+                solutions.Add(solution);
+
+                // NOTE - If we found a solution, then we have proved
+                // solvability and can stop.
+
+                if (goal == SolveGoal.ProveSolvable)
+                {
+                    break;
+                }
+
+                // NOTE - If we found multiple solutions, then we have
+                // disproved uniqueness and can stop.
+
+                if ((solutions.Count > 1) && (goal == SolveGoal.DisproveUniqueness))
+                {
+                    break;
+                }
+
+                // NOTE - Continue on.
+
+                backtrackCount += 1;
+
+                if (!TryBacktrack(cells, steps))
+                {
+                    break;
+                }
+            }
+        }
+
+        return (solutions, isComplete: true);
     }
 
     private static Step? GetStep(List<int> cells)
@@ -313,6 +341,8 @@ internal static class SudokuService
 
     private static void Shuffle(List<int> values, Random rng)
     {
+        // NOTE - Fisher–Yates shuffle.
+
         for (var i = values.Count; i > 0; i--)
         {
             Swap(values, 0, rng.Next(0, i));
@@ -321,18 +351,9 @@ internal static class SudokuService
 
     private static void Swap(List<int> values, int i, int j)
     {
-        var temp = values[i];
-        values[i] = values[j];
-        values[j] = temp;
+        (values[i], values[j]) = (values[j], values[i]);
     }
 
-    public enum SolveGoal
-    {
-        ProveSolvable,
-        DisproveUniqueness,
-        AllSolutions
-    }
-
-    private record Step(int CellIndex, Stack<int> Candidates);
+    private readonly record struct Step(int CellIndex, Stack<int> Candidates);
 }
 

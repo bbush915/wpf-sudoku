@@ -1,12 +1,15 @@
 ﻿//-----------------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs">
+// <copyright file="ISudokuService.cs">
 //     Copyright (c) 2021 by Bryan Bush. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------------
 
-using System.Windows;
+using WpfSudoku.Models;
 
-[assembly: ThemeInfo(
-    ResourceDictionaryLocation.None,
-    ResourceDictionaryLocation.SourceAssembly
-)]
+namespace WpfSudoku.Services.Interfaces;
+
+internal interface ISudokuService
+{
+    Puzzle GeneratePuzzle(int? seed = null);
+}
+

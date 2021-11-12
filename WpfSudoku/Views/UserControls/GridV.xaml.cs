@@ -1,24 +1,27 @@
 ﻿//-----------------------------------------------------------------------------
-// <copyright file="MainWindowV.xaml.cs">
+// <copyright file="GridV.xaml.cs">
 //     Copyright (c) 2021 by Bryan Bush. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------------
 
 using Microsoft.Extensions.DependencyInjection;
 
-using System.Windows;
+using System.Windows.Controls;
 
 using WpfSudoku.ViewModels;
 
-namespace WpfSudoku.Views;
+namespace WpfSudoku.Views.UserControls;
 
-public partial class MainWindowV : Window
+internal sealed partial class GridV : UserControl
 {
-    public MainWindowV()
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="GridV" /> class.
+    /// </summary>
+    public GridV()
     {
         this.InitializeComponent();
 
-        this.DataContext = App.Current.ServiceProvider.GetRequiredService<MainWindowVM>();
+        this.DataContext = App.Current.ServiceProvider.GetRequiredService<GridVM>();
     }
 }
 

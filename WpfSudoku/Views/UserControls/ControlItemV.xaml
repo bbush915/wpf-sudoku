@@ -1,0 +1,41 @@
+﻿<UserControl
+    x:Class="WpfSudoku.Views.UserControls.ControlItemV"
+    x:ClassModifier="internal"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d"
+    d:Height="50"
+    d:Width="50"
+    d:Background="White">
+
+    <UserControl.Style>
+        <Style
+            TargetType="{x:Type UserControl}">
+            <Setter
+                Property="Cursor"
+                Value="Hand" />
+            <Setter
+                Property="Background"
+                Value="White" />
+
+            <Style.Triggers>
+                <DataTrigger
+                    Binding="{Binding Path=IsActive}"
+                    Value="True">
+                    <Setter
+                        Property="Background"
+                        Value="#FFE9E9E9" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+
+    <TextBlock
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        FontSize="24"
+        FontFamily="Segoe UI"
+        Text="{Binding Path=Label}" />
+</UserControl>

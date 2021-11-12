@@ -1,12 +1,13 @@
 ﻿//-----------------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs">
+// <copyright file="Grid.cs">
 //     Copyright (c) 2021 by Bryan Bush. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------------
 
-using System.Windows;
+namespace WpfSudoku.Models;
 
-[assembly: ThemeInfo(
-    ResourceDictionaryLocation.None,
-    ResourceDictionaryLocation.SourceAssembly
-)]
+internal record struct Grid
+{
+    public Cell[] Cells { get; init; } = new Cell[81];
+}
+

@@ -1,0 +1,631 @@
+﻿<UserControl
+    x:Class="WpfSudoku.Views.UserControls.GridV"
+    x:ClassModifier="internal"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:uc="clr-namespace:WpfSudoku.Views.UserControls"
+    mc:Ignorable="d"
+    BorderThickness="1"
+    BorderBrush="Black"
+    d:Height="450"
+    d:Width="450"
+    d:Background="White">
+    <UserControl.Resources>
+        <Style
+            TargetType="{x:Type Line}">
+            <Setter
+                Property="Stroke"
+                Value="Black" />
+            <Setter
+                Property="StrokeThickness"
+                Value="1" />
+            <Setter
+                Property="Stretch"
+                Value="Fill" />
+        </Style>
+
+        <Style
+            x:Key="HorizontalLineStyle"
+            TargetType="{x:Type Line}"
+            BasedOn="{StaticResource ResourceKey={x:Type Line}}">
+            <Setter
+                Property="X1"
+                Value="0" />
+            <Setter
+                Property="X2"
+                Value="1" />
+        </Style>
+
+        <Style
+            x:Key="VerticalLineStyle"
+            TargetType="{x:Type Line}"
+            BasedOn="{StaticResource ResourceKey={x:Type Line}}">
+            <Setter
+                Property="Y1"
+                Value="0" />
+            <Setter
+                Property="Y2"
+                Value="1" />
+        </Style>
+
+        <Style
+            x:Key="DashedHorizontalLineStyle"
+            TargetType="{x:Type Line}"
+            BasedOn="{StaticResource ResourceKey=HorizontalLineStyle}">
+            <Setter
+                Property="StrokeDashArray"
+                Value="2,2" />
+        </Style>
+
+        <Style
+            x:Key="DashedVerticalLineStyle"
+            TargetType="{x:Type Line}"
+            BasedOn="{StaticResource ResourceKey=VerticalLineStyle}">
+            <Setter
+                Property="StrokeDashArray"
+                Value="2,2" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition
+                Height="1" />
+            <RowDefinition />
+            <RowDefinition
+                Height="1" />
+            <RowDefinition />
+            <RowDefinition
+                Height="1" />
+            <RowDefinition />
+            <RowDefinition
+                Height="1" />
+            <RowDefinition />
+            <RowDefinition
+                Height="1" />
+            <RowDefinition />
+            <RowDefinition
+                Height="1" />
+            <RowDefinition />
+            <RowDefinition
+                Height="1" />
+            <RowDefinition />
+            <RowDefinition
+                Height="1" />
+            <RowDefinition />
+
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition
+                Width="1" />
+            <ColumnDefinition />
+            <ColumnDefinition
+                Width="1" />
+            <ColumnDefinition />
+            <ColumnDefinition
+                Width="1" />
+            <ColumnDefinition />
+            <ColumnDefinition
+                Width="1" />
+            <ColumnDefinition />
+            <ColumnDefinition
+                Width="1" />
+            <ColumnDefinition />
+            <ColumnDefinition
+                Width="1" />
+            <ColumnDefinition />
+            <ColumnDefinition
+                Width="1" />
+            <ColumnDefinition />
+            <ColumnDefinition
+                Width="1" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Line
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="17"
+            Style="{StaticResource ResourceKey=DashedHorizontalLineStyle}" />
+
+        <Line
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="17"
+            Style="{StaticResource ResourceKey=DashedHorizontalLineStyle}" />
+
+        <Line
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="17"
+            Style="{StaticResource ResourceKey=HorizontalLineStyle}" />
+
+        <Line
+            Grid.Row="7"
+            Grid.Column="0"
+            Grid.ColumnSpan="17"
+            Style="{StaticResource ResourceKey=DashedHorizontalLineStyle}" />
+
+        <Line
+            Grid.Row="9"
+            Grid.Column="0"
+            Grid.ColumnSpan="17"
+            Style="{StaticResource ResourceKey=DashedHorizontalLineStyle}" />
+
+        <Line
+            Grid.Row="11"
+            Grid.Column="0"
+            Grid.ColumnSpan="17"
+            Style="{StaticResource ResourceKey=HorizontalLineStyle}" />
+
+        <Line
+            Grid.Row="13"
+            Grid.Column="0"
+            Grid.ColumnSpan="17"
+            Style="{StaticResource ResourceKey=DashedHorizontalLineStyle}" />
+
+        <Line
+            Grid.Row="15"
+            Grid.Column="0"
+            Grid.ColumnSpan="17"
+            Style="{StaticResource ResourceKey=DashedHorizontalLineStyle}" />
+
+        <Line
+            Grid.Row="0"
+            Grid.RowSpan="17"
+            Grid.Column="1"
+            Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
+
+        <Line
+            Grid.Row="0"
+            Grid.RowSpan="17"
+            Grid.Column="3"
+            Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
+
+        <Line
+            Grid.Row="0"
+            Grid.RowSpan="17"
+            Grid.Column="5"
+            Style="{StaticResource ResourceKey=VerticalLineStyle}" />
+
+        <Line
+            Grid.Row="0"
+            Grid.RowSpan="17"
+            Grid.Column="7"
+            Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
+
+        <Line
+            Grid.Row="0"
+            Grid.RowSpan="17"
+            Grid.Column="9"
+            Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
+
+        <Line
+            Grid.Row="0"
+            Grid.RowSpan="17"
+            Grid.Column="11"
+            Style="{StaticResource ResourceKey=VerticalLineStyle}" />
+
+        <Line
+            Grid.Row="0"
+            Grid.RowSpan="17"
+            Grid.Column="13"
+            Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
+
+        <Line
+            Grid.Row="0"
+            Grid.RowSpan="17"
+            Grid.Column="15"
+            Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
+
+        <uc:CellV
+            Grid.Row="0"
+            Grid.Column="0"
+            DataContext="{Binding Path=Cells[0]}" />
+
+        <uc:CellV
+            Grid.Row="0"
+            Grid.Column="2"
+            DataContext="{Binding Path=Cells[1]}" />
+
+        <uc:CellV
+            Grid.Row="0"
+            Grid.Column="4"
+            DataContext="{Binding Path=Cells[2]}" />
+
+        <uc:CellV
+            Grid.Row="0"
+            Grid.Column="6"
+            DataContext="{Binding Path=Cells[3]}" />
+
+        <uc:CellV
+            Grid.Row="0"
+            Grid.Column="8"
+            DataContext="{Binding Path=Cells[4]}" />
+
+        <uc:CellV
+            Grid.Row="0"
+            Grid.Column="10"
+            DataContext="{Binding Path=Cells[5]}" />
+
+        <uc:CellV
+            Grid.Row="0"
+            Grid.Column="12"
+            DataContext="{Binding Path=Cells[6]}" />
+
+        <uc:CellV
+            Grid.Row="0"
+            Grid.Column="14"
+            DataContext="{Binding Path=Cells[7]}" />
+
+        <uc:CellV
+            Grid.Row="0"
+            Grid.Column="16"
+            DataContext="{Binding Path=Cells[8]}" />
+
+        <uc:CellV
+            Grid.Row="2"
+            Grid.Column="0"
+            DataContext="{Binding Path=Cells[9]}" />
+
+        <uc:CellV
+            Grid.Row="2"
+            Grid.Column="2"
+            DataContext="{Binding Path=Cells[10]}" />
+
+        <uc:CellV
+            Grid.Row="2"
+            Grid.Column="4"
+            DataContext="{Binding Path=Cells[11]}" />
+
+        <uc:CellV
+            Grid.Row="2"
+            Grid.Column="6"
+            DataContext="{Binding Path=Cells[12]}" />
+
+        <uc:CellV
+            Grid.Row="2"
+            Grid.Column="8"
+            DataContext="{Binding Path=Cells[13]}" />
+
+        <uc:CellV
+            Grid.Row="2"
+            Grid.Column="10"
+            DataContext="{Binding Path=Cells[14]}" />
+
+        <uc:CellV
+            Grid.Row="2"
+            Grid.Column="12"
+            DataContext="{Binding Path=Cells[15]}" />
+
+        <uc:CellV
+            Grid.Row="2"
+            Grid.Column="14"
+            DataContext="{Binding Path=Cells[16]}" />
+
+        <uc:CellV
+            Grid.Row="2"
+            Grid.Column="16"
+            DataContext="{Binding Path=Cells[17]}" />
+
+        <uc:CellV
+            Grid.Row="4"
+            Grid.Column="0"
+            DataContext="{Binding Path=Cells[18]}" />
+
+        <uc:CellV
+            Grid.Row="4"
+            Grid.Column="2"
+            DataContext="{Binding Path=Cells[19]}" />
+
+        <uc:CellV
+            Grid.Row="4"
+            Grid.Column="4"
+            DataContext="{Binding Path=Cells[20]}" />
+
+        <uc:CellV
+            Grid.Row="4"
+            Grid.Column="6"
+            DataContext="{Binding Path=Cells[21]}" />
+
+        <uc:CellV
+            Grid.Row="4"
+            Grid.Column="8"
+            DataContext="{Binding Path=Cells[22]}" />
+
+        <uc:CellV
+            Grid.Row="4"
+            Grid.Column="10"
+            DataContext="{Binding Path=Cells[23]}" />
+
+        <uc:CellV
+            Grid.Row="4"
+            Grid.Column="12"
+            DataContext="{Binding Path=Cells[24]}" />
+
+        <uc:CellV
+            Grid.Row="4"
+            Grid.Column="14"
+            DataContext="{Binding Path=Cells[25]}" />
+
+        <uc:CellV
+            Grid.Row="4"
+            Grid.Column="16"
+            DataContext="{Binding Path=Cells[26]}" />
+
+        <uc:CellV
+            Grid.Row="6"
+            Grid.Column="0"
+            DataContext="{Binding Path=Cells[27]}" />
+
+        <uc:CellV
+            Grid.Row="6"
+            Grid.Column="2"
+            DataContext="{Binding Path=Cells[28]}" />
+
+        <uc:CellV
+            Grid.Row="6"
+            Grid.Column="4"
+            DataContext="{Binding Path=Cells[29]}" />
+
+        <uc:CellV
+            Grid.Row="6"
+            Grid.Column="6"
+            DataContext="{Binding Path=Cells[30]}" />
+
+        <uc:CellV
+            Grid.Row="6"
+            Grid.Column="8"
+            DataContext="{Binding Path=Cells[31]}" />
+
+        <uc:CellV
+            Grid.Row="6"
+            Grid.Column="10"
+            DataContext="{Binding Path=Cells[32]}" />
+
+        <uc:CellV
+            Grid.Row="6"
+            Grid.Column="12"
+            DataContext="{Binding Path=Cells[33]}" />
+
+        <uc:CellV
+            Grid.Row="6"
+            Grid.Column="14"
+            DataContext="{Binding Path=Cells[34]}" />
+
+        <uc:CellV
+            Grid.Row="6"
+            Grid.Column="16"
+            DataContext="{Binding Path=Cells[35]}" />
+
+        <uc:CellV
+            Grid.Row="8"
+            Grid.Column="0"
+            DataContext="{Binding Path=Cells[36]}" />
+
+        <uc:CellV
+            Grid.Row="8"
+            Grid.Column="2"
+            DataContext="{Binding Path=Cells[37]}" />
+
+        <uc:CellV
+            Grid.Row="8"
+            Grid.Column="4"
+            DataContext="{Binding Path=Cells[38]}" />
+
+        <uc:CellV
+            Grid.Row="8"
+            Grid.Column="6"
+            DataContext="{Binding Path=Cells[39]}" />
+
+        <uc:CellV
+            Grid.Row="8"
+            Grid.Column="8"
+            DataContext="{Binding Path=Cells[40]}" />
+
+        <uc:CellV
+            Grid.Row="8"
+            Grid.Column="10"
+            DataContext="{Binding Path=Cells[41]}" />
+
+        <uc:CellV
+            Grid.Row="8"
+            Grid.Column="12"
+            DataContext="{Binding Path=Cells[42]}" />
+
+        <uc:CellV
+            Grid.Row="8"
+            Grid.Column="14"
+            DataContext="{Binding Path=Cells[43]}" />
+
+        <uc:CellV
+            Grid.Row="8"
+            Grid.Column="16"
+            DataContext="{Binding Path=Cells[44]}" />
+
+        <uc:CellV
+            Grid.Row="10"
+            Grid.Column="0"
+            DataContext="{Binding Path=Cells[45]}" />
+
+        <uc:CellV
+            Grid.Row="10"
+            Grid.Column="2"
+            DataContext="{Binding Path=Cells[46]}" />
+
+        <uc:CellV
+            Grid.Row="10"
+            Grid.Column="4"
+            DataContext="{Binding Path=Cells[47]}" />
+
+        <uc:CellV
+            Grid.Row="10"
+            Grid.Column="6"
+            DataContext="{Binding Path=Cells[48]}" />
+
+        <uc:CellV
+            Grid.Row="10"
+            Grid.Column="8"
+            DataContext="{Binding Path=Cells[49]}" />
+
+        <uc:CellV
+            Grid.Row="10"
+            Grid.Column="10"
+            DataContext="{Binding Path=Cells[50]}" />
+
+        <uc:CellV
+            Grid.Row="10"
+            Grid.Column="12"
+            DataContext="{Binding Path=Cells[51]}" />
+
+        <uc:CellV
+            Grid.Row="10"
+            Grid.Column="14"
+            DataContext="{Binding Path=Cells[52]}" />
+
+        <uc:CellV
+            Grid.Row="10"
+            Grid.Column="16"
+            DataContext="{Binding Path=Cells[53]}" />
+
+        <uc:CellV
+            Grid.Row="12"
+            Grid.Column="0"
+            DataContext="{Binding Path=Cells[54]}" />
+
+        <uc:CellV
+            Grid.Row="12"
+            Grid.Column="2"
+            DataContext="{Binding Path=Cells[55]}" />
+
+        <uc:CellV
+            Grid.Row="12"
+            Grid.Column="4"
+            DataContext="{Binding Path=Cells[56]}" />
+
+        <uc:CellV
+            Grid.Row="12"
+            Grid.Column="6"
+            DataContext="{Binding Path=Cells[57]}" />
+
+        <uc:CellV
+            Grid.Row="12"
+            Grid.Column="8"
+            DataContext="{Binding Path=Cells[58]}" />
+
+        <uc:CellV
+            Grid.Row="12"
+            Grid.Column="10"
+            DataContext="{Binding Path=Cells[59]}" />
+
+        <uc:CellV
+            Grid.Row="12"
+            Grid.Column="12"
+            DataContext="{Binding Path=Cells[60]}" />
+
+        <uc:CellV
+            Grid.Row="12"
+            Grid.Column="14"
+            DataContext="{Binding Path=Cells[61]}" />
+
+        <uc:CellV
+            Grid.Row="12"
+            Grid.Column="16"
+            DataContext="{Binding Path=Cells[62]}" />
+
+        <uc:CellV
+            Grid.Row="14"
+            Grid.Column="0"
+            DataContext="{Binding Path=Cells[63]}" />
+
+        <uc:CellV
+            Grid.Row="14"
+            Grid.Column="2"
+            DataContext="{Binding Path=Cells[64]}" />
+
+        <uc:CellV
+            Grid.Row="14"
+            Grid.Column="4"
+            DataContext="{Binding Path=Cells[65]}" />
+
+        <uc:CellV
+            Grid.Row="14"
+            Grid.Column="6"
+            DataContext="{Binding Path=Cells[66]}" />
+
+        <uc:CellV
+            Grid.Row="14"
+            Grid.Column="8"
+            DataContext="{Binding Path=Cells[67]}" />
+
+        <uc:CellV
+            Grid.Row="14"
+            Grid.Column="10"
+            DataContext="{Binding Path=Cells[68]}" />
+
+        <uc:CellV
+            Grid.Row="14"
+            Grid.Column="12"
+            DataContext="{Binding Path=Cells[69]}" />
+
+        <uc:CellV
+            Grid.Row="14"
+            Grid.Column="14"
+            DataContext="{Binding Path=Cells[70]}" />
+
+        <uc:CellV
+            Grid.Row="14"
+            Grid.Column="16"
+            DataContext="{Binding Path=Cells[71]}" />
+
+        <uc:CellV
+            Grid.Row="16"
+            Grid.Column="0"
+            DataContext="{Binding Path=Cells[72]}" />
+
+        <uc:CellV
+            Grid.Row="16"
+            Grid.Column="2"
+            DataContext="{Binding Path=Cells[73]}" />
+
+        <uc:CellV
+            Grid.Row="16"
+            Grid.Column="4"
+            DataContext="{Binding Path=Cells[74]}" />
+
+        <uc:CellV
+            Grid.Row="16"
+            Grid.Column="6"
+            DataContext="{Binding Path=Cells[75]}" />
+
+        <uc:CellV
+            Grid.Row="16"
+            Grid.Column="8"
+            DataContext="{Binding Path=Cells[76]}" />
+
+        <uc:CellV
+            Grid.Row="16"
+            Grid.Column="10"
+            DataContext="{Binding Path=Cells[77]}" />
+
+        <uc:CellV
+            Grid.Row="16"
+            Grid.Column="12"
+            DataContext="{Binding Path=Cells[78]}" />
+
+        <uc:CellV
+            Grid.Row="16"
+            Grid.Column="14"
+            DataContext="{Binding Path=Cells[79]}" />
+
+        <uc:CellV
+            Grid.Row="16"
+            Grid.Column="16"
+            DataContext="{Binding Path=Cells[80]}" />
+    </Grid>
+</UserControl>

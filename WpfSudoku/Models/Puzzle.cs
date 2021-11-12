@@ -1,12 +1,14 @@
 ﻿//-----------------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs">
+// <copyright file="Puzzle.cs">
 //     Copyright (c) 2021 by Bryan Bush. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------------
 
-using System.Windows;
+namespace WpfSudoku.Models;
 
-[assembly: ThemeInfo(
-    ResourceDictionaryLocation.None,
-    ResourceDictionaryLocation.SourceAssembly
-)]
+internal record struct Puzzle
+{
+    public Grid Grid { get; init; } = new Grid();
+    public int[] Solution { get; init; } = new int[81];
+}
+
