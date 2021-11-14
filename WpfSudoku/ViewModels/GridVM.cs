@@ -16,9 +16,9 @@ namespace WpfSudoku.ViewModels;
 
 internal sealed class GridVM : ObservableRecipient, IRecipient<GridChangedMessage>, IRecipient<ActiveCellChangedMessage>
 {
-    private Grid _grid = new();
-
+    private Grid _grid;
     private CellVM[] _cells;
+
     private int? _activeCellIndex = default;
 
     /// <summary>
@@ -26,7 +26,8 @@ internal sealed class GridVM : ObservableRecipient, IRecipient<GridChangedMessag
     /// </summary>
     public GridVM() : base()
     {
-        this._cells = this._grid.Cells.Select((cell, index) => new CellVM() { Cell = cell, Index = index }).ToArray();
+        this._grid = new();
+        this._cells = GetCells(this._grid);
 
         this.IsActive = true;
     }
@@ -39,19 +40,26 @@ internal sealed class GridVM : ObservableRecipient, IRecipient<GridChangedMessag
 
     public void Receive(GridChangedMessage message)
     {
-        this._grid = message.Value;
+        // NOTE - When the grid changes, we regenerate our cells.
 
-        this.Cells = this._grid.Cells.Select((cell, index) => new CellVM() { Cell = cell, Index = index }).ToArray();
+        this._grid = message.Value;
+        this.Cells = GetCells(this._grid);
     }
 
     public void Receive(ActiveCellChangedMessage message)
     {
-        if (this._activeCellIndex.HasValue)
+        // NOTE - Deactivate the previous active cell, if necessary.
+
+        if (this._activeCellIndex != null)
         {
             this.Cells[this._activeCellIndex.Value].IsActive = false;
         }
 
-        this._activeCellIndex = (message.Value == null) ? null : message.Value.Index;
+        // NOTE - Store the index of the current active cell.
+
+        this._activeCellIndex = message.Value?.Index;
     }
+
+    private static CellVM[] GetCells(Grid grid) => grid.Cells.Select((cell, index) => new CellVM(cell) { Index = index }).ToArray();
 }
 

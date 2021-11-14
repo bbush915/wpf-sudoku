@@ -12,8 +12,11 @@ using WpfSudoku.ViewModels;
 
 namespace WpfSudoku.Views;
 
-public partial class MainWindowV : Window
+public sealed partial class MainWindowV : Window
 {
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="MainWindowV" /> class.
+    /// </summary>
     public MainWindowV()
     {
         this.InitializeComponent();

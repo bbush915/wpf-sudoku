@@ -5,10 +5,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     mc:Ignorable="d"
     d:Height="50"
     d:Width="50"
     d:Background="White">
+
+    <b:Interaction.Triggers>
+        <b:EventTrigger
+            EventName="MouseLeftButtonUp">
+            <b:InvokeCommandAction
+                Command="{Binding Path=ToggleCommand}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
 
     <UserControl.Style>
         <Style
@@ -19,8 +28,16 @@
             <Setter
                 Property="Background"
                 Value="White" />
+            <Setter
+                Property="IsEnabled"
+                Value="{Binding Path=IsEnabled}" />
 
             <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter
+                        Property="Foreground"
+                        Value="Gray" />
+                </Trigger>
                 <DataTrigger
                     Binding="{Binding Path=IsActive}"
                     Value="True">

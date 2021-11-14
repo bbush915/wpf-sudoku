@@ -7,15 +7,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     mc:Ignorable="d"
-    d:Height="50"
-    d:Width="50"
+    d:Height="40"
+    d:Width="40"
     d:Background="White">
 
     <b:Interaction.Triggers>
         <b:EventTrigger
             EventName="MouseLeftButtonUp">
             <b:InvokeCommandAction
-                Command="{Binding Path=ActivateCommand}" />
+                Command="{Binding Path=ToggleCommand}" />
         </b:EventTrigger>
     </b:Interaction.Triggers>
 
@@ -41,28 +41,112 @@
         </Style>
     </UserControl.Style>
 
-    <TextBlock
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        FontSize="24"
-        FontFamily="Segoe UI"
-        Text="{Binding Path=Value}">
-        <TextBlock.Style>
-            <Style
-                TargetType="{x:Type TextBlock}">
-                <Setter
-                    Property="Foreground"
-                    Value="Blue" />
-                <Style.Triggers>
-                    <DataTrigger
-                        Binding="{Binding Path=IsGiven}"
-                        Value="True">
-                        <Setter
-                            Property="Foreground"
-                            Value="Black" />
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </TextBlock.Style>
-    </TextBlock>
+    <Grid>
+        <TextBlock
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="24"
+            FontFamily="Segoe UI"
+            Text="{Binding Path=Value}"
+            Visibility="{Binding Path=ShowValue, Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+            <TextBlock.Style>
+                <Style
+                    TargetType="{x:Type TextBlock}">
+                    <Setter
+                        Property="FontWeight"
+                        Value="Light" />
+                    <Style.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Path=IsGiven}"
+                            Value="True">
+                            <Setter
+                                Property="FontWeight"
+                                Value="DemiBold" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <Grid
+            Visibility="{Binding Path=ShowPencilMarks, Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+            <Grid.Resources>
+                <Style
+                    TargetType="{x:Type TextBlock}">
+                    <Setter
+                        Property="HorizontalAlignment"
+                        Value="Center" />
+                    <Setter
+                        Property="VerticalAlignment"
+                        Value="Center" />
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="1"
+                Visibility="{Binding Path=PencilMarks[0], Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="2"
+                Visibility="{Binding Path=PencilMarks[1], Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="2"
+                Text="3"
+                Visibility="{Binding Path=PencilMarks[2], Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="4"
+                Visibility="{Binding Path=PencilMarks[3], Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="5"
+                Visibility="{Binding Path=PencilMarks[4], Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="2"
+                Text="6"
+                Visibility="{Binding Path=PencilMarks[5], Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Text="7"
+                Visibility="{Binding Path=PencilMarks[6], Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="8"
+                Visibility="{Binding Path=PencilMarks[7], Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="2"
+                Text="9"
+                Visibility="{Binding Path=PencilMarks[8], Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+        </Grid>
+    </Grid>
 </UserControl>

@@ -26,13 +26,31 @@ internal sealed class MainWindowVM
     {
         this._sudokuService = sudokuService;
 
+        this.CheckCommand = new RelayCommand(this.Check);
         this.GenerateCommand = new RelayCommand(this.Generate);
         this.SolveCommand = new RelayCommand(this.Solve);
     }
 
+    public ICommand CheckCommand { get; }
+
     public ICommand GenerateCommand { get; }
 
     public ICommand SolveCommand { get; }
+
+    private void Check()
+    {
+        var cells = this._puzzle.Grid.Cells;
+
+        var isCorrect = true;
+
+        for (var i = 0; i < 81; i++)
+        {
+            if (!cells[i].IsGiven && (cells[i].Value > 0) && (cells[i].Value != this._puzzle.Solution[i]))
+            {
+                isCorrect = false;
+            }
+        }
+    }
 
     private void Generate()
     {
@@ -54,6 +72,7 @@ internal sealed class MainWindowVM
         }
 
         WeakReferenceMessenger.Default.Send(new GridChangedMessage(grid));
+        WeakReferenceMessenger.Default.Send(new ActiveCellChangedMessage(null));
     }
 }
 

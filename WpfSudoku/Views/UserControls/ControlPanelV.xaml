@@ -10,9 +10,8 @@
     Background="White"
     BorderThickness="1"
     BorderBrush="Black"
-    d:Width="450"
-    d:Height="45"
     d:Background="White">
+    
     <UserControl.Resources>
         <Style
             TargetType="{x:Type Line}">
@@ -44,99 +43,130 @@
     </UserControl.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="40" />
+        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
         </Grid.ColumnDefinitions>
 
         <Line
+            Grid.Row="0"
             Grid.Column="1"
             Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
 
         <Line
+            Grid.Row="0"
             Grid.Column="3"
             Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
 
         <Line
+            Grid.Row="0"
             Grid.Column="5"
             Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
 
         <Line
+            Grid.Row="0"
             Grid.Column="7"
             Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
 
         <Line
+            Grid.Row="0"
             Grid.Column="9"
             Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
 
         <Line
+            Grid.Row="0"
             Grid.Column="11"
             Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
 
         <Line
+            Grid.Row="0"
             Grid.Column="13"
             Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
 
         <Line
+            Grid.Row="0"
             Grid.Column="15"
             Style="{StaticResource ResourceKey=DashedVerticalLineStyle}" />
 
         <uc:ControlItemV
+            Grid.Row="0"
             Grid.Column="0"
             DataContext="{Binding Path=Items[0]}" />
 
         <uc:ControlItemV
+            Grid.Row="0"
             Grid.Column="2"
             DataContext="{Binding Path=Items[1]}" />
 
         <uc:ControlItemV
+            Grid.Row="0"
             Grid.Column="4"
             DataContext="{Binding Path=Items[2]}" />
 
         <uc:ControlItemV
+            Grid.Row="0"
             Grid.Column="6"
             DataContext="{Binding Path=Items[3]}" />
 
         <uc:ControlItemV
+            Grid.Row="0"
             Grid.Column="8"
             DataContext="{Binding Path=Items[4]}" />
 
         <uc:ControlItemV
+            Grid.Row="0"
             Grid.Column="10"
             DataContext="{Binding Path=Items[5]}" />
 
         <uc:ControlItemV
+            Grid.Row="0"
             Grid.Column="12"
             DataContext="{Binding Path=Items[6]}" />
 
         <uc:ControlItemV
+            Grid.Row="0"
             Grid.Column="14"
             DataContext="{Binding Path=Items[7]}" />
 
         <uc:ControlItemV
+            Grid.Row="0"
             Grid.Column="16"
             DataContext="{Binding Path=Items[8]}" />
     </Grid>

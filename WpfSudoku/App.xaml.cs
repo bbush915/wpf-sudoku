@@ -16,7 +16,7 @@ using WpfSudoku.Views;
 
 namespace WpfSudoku;
 
-public partial class App : Application
+public sealed partial class App : Application
 {
     public static new App Current => (App)Application.Current;
 

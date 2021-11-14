@@ -8,6 +8,8 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 
+using System.Collections;
+using System.Linq;
 using System.Windows.Input;
 
 using WpfSudoku.Messages;
@@ -17,29 +19,35 @@ namespace WpfSudoku.ViewModels;
 
 internal sealed class CellVM : ObservableObject
 {
+    private Cell _cell;
+
     private bool _isActive = default;
 
-    /// <summary>
-    ///     Initializes a new instance of the <see cref="CellVM" /> class.
-    /// </summary>
-    public CellVM()
+    public CellVM(Cell cell)
     {
-        this.ActivateCommand = new RelayCommand(this.Activate);
-    }
+        this._cell = cell;
 
-    public Cell Cell { get; init; } = new();
+        this.PencilMarks = new BitArray(9);
+        
+        if (this._cell.Value > 0)
+        {
+            this.PencilMarks.Set(this._cell.Value - 1, true);
+        }
+
+        this.ToggleCommand = new RelayCommand(this.Toggle);
+    }
 
     public int Index { get; init; }
 
-    public string Value
-    {
-        get => (this.Cell.Value > 0) ? this.Cell.Value.ToString() : string.Empty;
-    }
+    public bool ShowValue => this._cell.IsGiven || (this._cell.Value > 0);
 
-    public bool IsGiven
-    {
-        get => this.Cell.IsGiven;
-    }
+    public string Value => this._cell.Value.ToString();
+     
+    public bool ShowPencilMarks => !this.ShowValue;
+
+    public BitArray PencilMarks { get; private set; }
+
+    public bool IsGiven =>  this._cell.IsGiven;
 
     public bool IsActive
     {
@@ -47,9 +55,41 @@ internal sealed class CellVM : ObservableObject
         set => this.SetProperty(ref this._isActive, value);
     }
 
-    public ICommand ActivateCommand { get; private set; }
+    public ICommand ToggleCommand { get; private set; }
 
-    private void Activate()
+    public void Update(int value, bool isActive)
+    {
+        // NOTE - The desired behavior is that we convert to pencil marks if we
+        // set more than one value, and back to values if we remove all but one
+        // pencil mark.
+        //
+        // Initially, we both set the value and the pencil mark, then clean up
+        // based on the pencil mark count.
+
+        this._cell.Value = isActive ? value : 0;
+        this.PencilMarks.Set(value - 1, isActive);
+
+        var pencilMarkCount = this.PencilMarks.Cast<bool>().Count(x => x == true);
+
+        if (pencilMarkCount == 0 || pencilMarkCount > 1)
+        {
+            this._cell.Value = 0;
+        }
+        else
+        {
+            // NOTE - We use the sole pencil mark to set the value.
+
+            var newValue = this.PencilMarks.Cast<bool>().Select((value, index) => (Value: value, Index: index)).Single(x => x.Value == true).Index + 1;
+            this._cell.Value = newValue;
+        }
+
+        this.OnPropertyChanged(nameof(this.ShowValue));
+        this.OnPropertyChanged(nameof(this.Value));
+        this.OnPropertyChanged(nameof(this.ShowPencilMarks));
+        this.OnPropertyChanged(nameof(this.PencilMarks));
+    }
+
+    private void Toggle()
     {
         if (this.IsActive)
         {

@@ -4,28 +4,73 @@
 // </copyright>
 //-----------------------------------------------------------------------------
 
+using System;
 using System.Linq;
 
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
+
+using WpfSudoku.Messages;
 
 namespace WpfSudoku.ViewModels;
 
-internal sealed class ControlPanelVM : ObservableObject
+internal sealed class ControlPanelVM : ObservableRecipient, IRecipient<ActiveCellChangedMessage>
 {
-    private ControlItemVM[] _items;
+    private CellVM? _activeCell = default;
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ControlPanelVM" /> class.
     /// </summary>
     public ControlPanelVM()
     {
-        this._items = Enumerable.Range(1, 9).Select(n => new ControlItemVM() { Label = n.ToString() }).ToArray();
+        this.Items = Enumerable
+            .Range(0, 9)
+            .Select(n => new ControlItemVM() { Index = n, UpdateCell = CurryUpdateCell(n + 1) })
+            .ToArray();
+
+        this.IsActive = true;
     }
 
-    public ControlItemVM[] Items
+    public ControlItemVM[] Items { get; private set; }
+
+    public void Receive(ActiveCellChangedMessage message)
     {
-        get => this._items;
-        set => this.SetProperty(ref this._items, value);
+        this._activeCell = message.Value;
+
+        foreach (var item in this.Items)
+        {
+            if (this._activeCell == null)
+            {
+                item.IsEnabled = false;
+                item.IsActive = false;
+            }
+            else
+            {
+                // NOTE - We don't enable the control item for the given cells.
+
+                item.IsEnabled =  !this._activeCell.IsGiven;
+
+                // NOTE - We activate the control item if the value matches or 
+                // the associated pencil mark was set.
+
+                item.IsActive = (this._activeCell.Value == (item.Index + 1).ToString()) || this._activeCell.PencilMarks.Get(item.Index);
+            }
+        }
+    }
+
+    private Action<bool> CurryUpdateCell(int value)
+    {
+        void UpdateCell(bool isActive)
+        {
+            if (this._activeCell == null)
+            {
+                return;
+            }
+
+            this._activeCell.Update(value, isActive);
+        }
+
+        return UpdateCell;
     }
 }
 

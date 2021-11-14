@@ -9,9 +9,8 @@
     mc:Ignorable="d"
     BorderThickness="1"
     BorderBrush="Black"
-    d:Height="450"
-    d:Width="450"
     d:Background="White">
+    
     <UserControl.Resources>
         <Style
             TargetType="{x:Type Line}">
@@ -71,60 +70,77 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition
+                Height="40" />
             <RowDefinition
                 Height="1" />
-            <RowDefinition />
+            <RowDefinition
+                Height="40" />
             <RowDefinition
                 Height="1" />
-            <RowDefinition />
+            <RowDefinition
+                Height="40" />
             <RowDefinition
                 Height="1" />
-            <RowDefinition />
+            <RowDefinition
+                Height="40" />
             <RowDefinition
                 Height="1" />
-            <RowDefinition />
+            <RowDefinition
+                Height="40" />
             <RowDefinition
                 Height="1" />
-            <RowDefinition />
+            <RowDefinition
+                Height="40" />
             <RowDefinition
                 Height="1" />
-            <RowDefinition />
+            <RowDefinition
+                Height="40" />
             <RowDefinition
                 Height="1" />
-            <RowDefinition />
+            <RowDefinition
+                Height="40" />
             <RowDefinition
                 Height="1" />
-            <RowDefinition />
-
+            <RowDefinition
+                Height="40" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
             <ColumnDefinition
                 Width="1" />
-            <ColumnDefinition />
+            <ColumnDefinition
+                Width="40" />
         </Grid.ColumnDefinitions>
 
         <Line
